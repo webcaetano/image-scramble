@@ -1,0 +1,33 @@
+{
+  "name": "image-scramble",
+  "version": "0.0.1",
+  "description": "Image Scramble with Seed",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "keywords": [
+    "scramble",
+    "image",
+    "scramble",
+    "image",
+    "image",
+    "shuffle",
+    "shuffle",
+    "safety",
+    "safety",
+    "image",
+    "protect"
+  ],
+  "author": "Andre Caetano",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3"
+  },
+  "dependencies": {
+    "async": "^1.5.0",
+    "gm": "^1.21.1",
+    "lodash": "^3.10.1"
+  }
+}
