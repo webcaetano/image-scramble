@@ -1,4 +1,4 @@
-# image-scramble
+# Image-scramble
 Image Scramble with Seed
 
 
