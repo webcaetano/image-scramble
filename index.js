@@ -25,14 +25,18 @@ module.exports = function(options,done){
 		};
 	}
 
+	var getPartBuffer = function(part,sizeImg,callback){
+		var part = getPart(part,sizeImg);
+		getPieceImage(part.x,part.y,callback)
+	}
+
 	async.auto({
 		getSize:function(callback){
 			gm(options.image)
 			.size(callback)
 		},
 		crop:['getSize',function(callback,results){
-			var part = getPart(1,results.getSize);
-			getPieceImage(part.x,part.y,callback)
+			getPartBuffer(1,results.getSize,callback)
 		}],
 		save:['crop',function(callback,results){
 			gm(results.crop)
