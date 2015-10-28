@@ -4,6 +4,6 @@ Image Scramble with Seed
 
 RoadMap
 
-- [ ] Create NodeJS module for Shuffle Seed using https://github.com/davidbau/seedrandom
+- [x] Create NodeJS module for Shuffle Seed https://github.com/webcaetano/seed-shuffle
 - [ ] Scrambled Image
 - [ ] UnScramble Image (client and server)
