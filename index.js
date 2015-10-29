@@ -52,8 +52,9 @@ module.exports = function(options,done){
 		save:['slices',function(callback,results){
 			var totalParts = results.totalParts;
 			results.slices = shuffleSeed.shuffle(results.slices,options.seed)
-			new Jimp('./test/emptyPixel.png',function(err, image){
-				this.resize(results.getSize.bitmap.width,results.getSize.bitmap.height);
+			// new Jimp('./test/emptyPixel.png',function(err, image){
+				// this.resize(results.getSize.bitmap.width,results.getSize.bitmap.height);
+			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				for(var i=0;i<totalParts;i++){
 					var pos  = getPartPos(i,results.getSize.bitmap);
 					this.blit( results.slices[i], pos.x, pos.y )
