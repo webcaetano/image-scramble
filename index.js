@@ -11,7 +11,6 @@ var defaults = {
 
 module.exports = function(options,done){
 	options = _.extend({},defaults,options);
-	// var filterType = 2;
 
 	var getPartPos = function(part,sizeImg){
 		return {
@@ -23,7 +22,6 @@ module.exports = function(options,done){
 	var getPart = function(part,sizeImg,callback){
 		var pos = getPartPos(part,sizeImg)
 		new Jimp(options.image, function(err,image){
-			// this.filterType(filterType);
 			this.crop(pos.x,pos.y,options.sliceSize,options.sliceSize)
 			callback(err,image);
 		});
@@ -53,16 +51,12 @@ module.exports = function(options,done){
 		}],
 		save:['slices',function(callback,results){
 			var totalParts = results.totalParts;
-			// results.slices = shuffleSeed.shuffle(results.slices,options.seed)
-			// console.log(results)
+			results.slices = shuffleSeed.shuffle(results.slices,options.seed)
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
-				console.log(err)
 				for(var i=0;i<totalParts;i++){
 					var pos  = getPartPos(i,results.getSize.bitmap);
 					this.composite( results.slices[i], pos.x, pos.y )
 				}
-				// this.filterType(filterType);
-				// this.deflateLevel( 8 )
 				this.write(options.dest,callback)
 			});
 		}]

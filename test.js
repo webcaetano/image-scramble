@@ -8,13 +8,14 @@ describe('image-scramble', function() {
 
 	it('should do something', function(done) {
 		// console.log('oi<-')
+		this.timeout(20000);
 		imgScramble({
-			image:'test/1.png',
+			image:'test/2.png',
 			seed:'Kappa',
-			sliceSize:100,
-			dest:'test/1_crop.png'
+			sliceSize:5,
+			dest:'test/2_crop.png'
 		},function(err,results){
-			console.log(err,results)
+			console.log(err)
 			done();
 		})
 		// done();
