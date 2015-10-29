@@ -41,9 +41,26 @@ module.exports = function(options,done){
 			getPartBuffer(6,results.getSize.bitmap,callback)
 		}],
 		save:['crop',function(callback,results){
-			new Jimp(results.crop, function(err,image){
-				this.write(options.dest,callback)
-			})
+			// new Jimp(results.crop, function(err,image){
+			// 	this.write(options.dest,callback)
+			// })
+	console.log(new Buffer('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12P4zwAAAgEBAKrChTYAAAAASUVORK5CYII=', 'base64'))
+			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
+				// this.resize(results.getSize.bitmap.width,results.getSize.bitmap.height)
+				console.log(err)
+				this
+				.write(options.dest,callback)
+			});
+
+
+			// .composite(tmpImg)
+			// .geometry((emblem.x>= 0 ? '+' : '')+emblem.x+(emblem.y>= 0 ? '+' : '')+emblem.y)
+			// .write(path.join(root,'/src/images/emblem/gr/'+id+'.png'), function (err,result) {
+			// 	fs.unlinkSync(tmpImg);
+			// 	callback(err,result);
+			// });
 		}]
 	},done)
 }
+
+
