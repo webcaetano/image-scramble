@@ -13,25 +13,14 @@ module.exports = function(options,done){
 	options = _.extend({},defaults,options);
 
 	var getPartPos = function(part,sizeImg){
-		console.log(Math.floor(part/(sizeImg.height/options.sliceSize)))
 
-		var verticalSlices=sizeImg.width/options.sliceSize;
-		var horizontalSlices=sizeImg.height/options.sliceSize;
+		var verticalSlices=Math.ceil(sizeImg.width/options.sliceSize);
 		var row=parseInt(part/verticalSlices);
 		var col=part-row*verticalSlices;
-		var x=Math.floor(col*options.sliceSize);
-		var y=Math.floor(row*options.sliceSize);
-
-		// console.log(x+" "+y)
-		// var canvasRow=parseInt(i/verticalSlices);
-		// var canvasCol=i-canvasRow*verticalSlices;
-		// var canvasX=canvasCol*sliceSize;
-		// var canvasY=canvasRow*sliceSize;
 
 		return {
-			x:x,
-			// y:options.sliceSize*Math.floor(part/(sizeImg.height/options.sliceSize))
-			y:y
+			x:Math.floor(col*options.sliceSize),
+			y:Math.floor(row*options.sliceSize)
 		};
 	}
 
@@ -44,7 +33,7 @@ module.exports = function(options,done){
 	}
 
 	var getTotalParts = function(sizeImg){
-		return Math.floor((sizeImg.width*sizeImg.height)/(options.sliceSize*options.sliceSize));
+		return Math.ceil(sizeImg.width/options.sliceSize)*Math.ceil(sizeImg.height/options.sliceSize);
 	}
 
 	async.auto({
@@ -57,7 +46,6 @@ module.exports = function(options,done){
 		slices:['totalParts',function(callback,results){
 			var totalParts = results.totalParts;
 			var run = [];
-			// console.log(totalParts)
 
 			_.map(new Array(totalParts),function(e,i){
 				run.push(function(cb){
