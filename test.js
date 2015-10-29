@@ -9,7 +9,7 @@ describe('image-scramble', function() {
 	it('should do something', function(done) {
 		// console.log('oi<-')
 		imgScramble({
-			image:'test/1.png',
+			image:'test/2.png',
 			sliceSize:25,
 			dest:'test/1_crop.png'
 		},function(err,results){
