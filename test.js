@@ -7,10 +7,10 @@ var imgScramble = require('./');
 describe('image-scramble', function() {
 
 	it('should do something', function(done) {
-		console.log('oi<-')
+		// console.log('oi<-')
 		imgScramble({
 			image:'test/1.png',
-			sliceSize:50,
+			sliceSize:25,
 			dest:'test/1_crop.png'
 		},function(err,results){
 			console.log(err,results)

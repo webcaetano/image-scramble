@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "async": "^1.5.0",
-    "gm": "^1.21.1",
-    "lodash": "^3.10.1"
+    "jimp": "^0.2.9",
+    "lodash": "^3.10.1",
+    "shuffle-seed": "^1.1.0"
   }
 }
