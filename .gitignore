@@ -1,2 +1,4 @@
 node_modules/
-.tmp/
+bower_components/
+test/
+examples/
