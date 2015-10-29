@@ -10,10 +10,10 @@ describe('image-scramble', function() {
 		// console.log('oi<-')
 		this.timeout(60000);
 		imgScramble({
-			image:'test/2.png',
+			image:'test/sample3.png',
 			seed:'Kappa',
 			sliceSize:5,
-			dest:'test/2_crop.png'
+			dest:'test/sample3_crop.png'
 		},function(err,results){
 			console.log(err)
 			done();

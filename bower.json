@@ -1,0 +1,24 @@
+{
+  "name": "image-scramble",
+  "main": "index.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/webcaetano/image-scramble",
+  "authors": [
+    "Andre Caetano <dezaodoido@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.4",
+    "shuffle-seed": "~1.1.1"
+  },
+  "dependencies": {
+    "phaser": "~2.4.4"
+  }
+}
