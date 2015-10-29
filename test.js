@@ -12,7 +12,7 @@ describe('image-scramble', function() {
 		imgScramble({
 			image:'test/2.png',
 			seed:'Kappa',
-			sliceSize:10,
+			sliceSize:5,
 			dest:'test/2_crop.png'
 		},function(err,results){
 			console.log(err)
