@@ -12,25 +12,23 @@ var defaults = {
 module.exports = function(options,done){
 	options = _.extend({},defaults,options);
 
-	var getPart = function(part,sizeImg){
+	var getPartPos = function(part,sizeImg){
 		return {
 			x:options.sliceSize*(part%(sizeImg.width/options.sliceSize)),
 			y:options.sliceSize*Math.floor(part/(sizeImg.height/options.sliceSize))
 		};
 	}
 
-	var getTotalParts = function(sizeImg){
-		return (sizeImg.width*sizeImg.height)/(options.sliceSize*options.sliceSize);
+	var getPart = function(part,sizeImg,callback){
+		var pos = getPartPos(part,sizeImg)
+		new Jimp(options.image, function(err,image){
+			this.crop(pos.x,pos.y,options.sliceSize,options.sliceSize)
+			callback(err,image);
+		});
 	}
 
-	var getPartBuffer = function(part,sizeImg,callback){
-		console.log(getTotalParts(sizeImg));
-		var part = getPart(part,sizeImg);
-
-		new Jimp(options.image, function(err,image){
-			this.crop(part.x,part.y,options.sliceSize,options.sliceSize)
-			.getBuffer( Jimp.MIME_PNG, callback);
-		});
+	var getTotalParts = function(sizeImg){
+		return (sizeImg.width*sizeImg.height)/(options.sliceSize*options.sliceSize);
 	}
 
 	async.auto({
@@ -38,27 +36,16 @@ module.exports = function(options,done){
 			new Jimp(options.image, callback);
 		},
 		crop:['getSize',function(callback,results){
-			getPartBuffer(6,results.getSize.bitmap,callback)
+			getPart(6,results.getSize.bitmap,callback)
 		}],
 		save:['crop',function(callback,results){
-			// new Jimp(results.crop, function(err,image){
-			// 	this.write(options.dest,callback)
-			// })
-	console.log(new Buffer('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12P4zwAAAgEBAKrChTYAAAAASUVORK5CYII=', 'base64'))
+			var pos  = getPartPos(6,results.getSize.bitmap);
+
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
-				// this.resize(results.getSize.bitmap.width,results.getSize.bitmap.height)
 				console.log(err)
-				this
+				this.composite( results.crop, pos.x, pos.y )
 				.write(options.dest,callback)
 			});
-
-
-			// .composite(tmpImg)
-			// .geometry((emblem.x>= 0 ? '+' : '')+emblem.x+(emblem.y>= 0 ? '+' : '')+emblem.y)
-			// .write(path.join(root,'/src/images/emblem/gr/'+id+'.png'), function (err,result) {
-			// 	fs.unlinkSync(tmpImg);
-			// 	callback(err,result);
-			// });
 		}]
 	},done)
 }
