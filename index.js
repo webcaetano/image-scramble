@@ -53,7 +53,7 @@ module.exports = function(options,done){
 		}],
 		save:['slices',function(callback,results){
 			var totalParts = results.totalParts;
-
+			// results.slices = shuffleSeed.shuffle(results.slices,options.seed)
 			// console.log(results)
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				console.log(err)
