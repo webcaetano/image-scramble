@@ -25,13 +25,21 @@ module.exports = function(options,done){
 	}
 
 	var getPart = function(part,sizeImg,callback){
+		var self = {};
 		var pos = getPartPos(part,sizeImg)
-		new Jimp(options.image, function(err,image){
-			this.crop(pos.x,pos.y,options.sliceSize,options.sliceSize)
-			this.x = pos.x;
-			this.y = pos.y;
-			this.size = (options.sliceSize-(pos.x+options.sliceSize<=sizeImg.width ?  0 : (pos.x+options.sliceSize)-sizeImg.width))+"-"+
+		self.pos = pos;
+		self.size = (options.sliceSize-(pos.x+options.sliceSize<=sizeImg.width ?  0 : (pos.x+options.sliceSize)-sizeImg.width))+
+			"-"+
 			(options.sliceSize-(pos.y+options.sliceSize<=sizeImg.height ?  0 : (pos.y+options.sliceSize)-sizeImg.height))
+		return self;
+	}
+
+
+	var getSliceImage = function(slice,ind,group,callback){
+		var pos = getPartPos(ind,group);
+		var size = slice.size.split("-");
+		new Jimp(options.image, function(err,image){
+			image.crop(group.x+pos.x,group.y+pos.y,parseInt(size[0]),parseInt(size[1]))
 			callback(err,image);
 		});
 	}
@@ -43,10 +51,10 @@ module.exports = function(options,done){
 	var getColsInGroup = function(slices){
 		var y = 'init';
 		for(var i=0;i<slices.length;i++){
-			if(y=='init') y = slices[i].y;
-			if(y!=slices[i].y){
+			if(y=='init') y = slices[i].pos.y;
+			if(y!=slices[i].pos.y){
 				return i;
-				console.log(slices[i].y)
+				console.log(slices[i].pos.y)
 				break;
 			}
 		}
@@ -101,54 +109,43 @@ module.exports = function(options,done){
 		totalParts:['getSize',function(callback,results){
 			callback(null,getTotalParts(results.getSize.bitmap));
 		}],
-		slices:['totalParts',function(callback,results){
+		getSlices:['totalParts',function(callback,results){
 			var totalParts = results.totalParts;
-			var run = [];
+			var slices = {};
 
 			_.map(new Array(totalParts),function(e,i){
-				run.push(function(cb){
-					getPart(i,results.getSize.bitmap,cb)
-				})
+				var s = getPart(i,results.getSize.bitmap);
+				if(!slices[s.size]) slices[s.size]=[];
+				slices[s.size].push(s)
 			})
-			// async.parallel(run,callback)
-			async.parallel(run,function(err,data){
-				var resp = {};
-				_.forEach(data,function(slice){
-					if(!resp[slice.size]) resp[slice.size]=[];
-					resp[slice.size].push(slice)
-				});
-				callback(err,resp);
-			})
+
+			callback(null,slices);
 		}],
-		save:['slices',function(callback,results){
+		save:['getSlices',function(callback,results){
 			var totalParts = results.totalParts;
 			var allSlices = [];
-			// var types = {};
-			// _.forEach(results.slices,function(slices,k){
-			// 	types[k] = getGroup(k,slices.results.getSize.bitmap)
-			// 	results.slices[k] = shuffleSeed.shuffle(slices,options.seed)
-			// 	allSlices = allSlices.concat(results.slices[k]);
-			// })
 
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
-				// for(var i=0;i<totalParts;i++){
-				// 	if()
-				// 	var pos  = getPartPos(i,results.getSize.bitmap);
-				// 	this.blit( allSlices[i], pos.x, pos.y )
-				// }
-				_.forEach(results.slices,function(slices,k){
-					var group = getGroup(k,slices,results.getSize.bitmap)
-					slices = shuffleSeed.shuffle(slices,options.seed)
-					_.forEach(slices,function(slice,i){
-						var pos  = getPartPos(i,group);
-						image.blit(slice, group.x+pos.x, group.y+pos.y)
-					})
-					// allSlices = allSlices.concat(results.slices[k]);
+				async.forEachOf(results.getSlices,function(slices,k,done){
+					var group = getGroup(k,slices,results.getSize.bitmap);
+					var shuffleInd = [];
+					for(var i=0;i<slices.length;i++) shuffleInd.push(i);
+
+					shuffleInd = shuffleSeed.shuffle(shuffleInd,options.seed);
+
+					async.forEachOf(slices,function(slice,i,callback){
+						getSliceImage(slice,i,group,function(err, sliceImg){
+							var pos  = getPartPos(shuffleInd[i],group);
+							image.blit(sliceImg, group.x+pos.x, group.y+pos.y)
+							callback();
+						});
+					},done)
+				},function(err){
+					console.log(err)
+					console.log('1')
+					image.write(options.dest,callback)
 				})
-				image.write(options.dest,callback)
 			});
 		}]
 	},done)
 }
-
-

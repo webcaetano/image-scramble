@@ -8,7 +8,7 @@ describe('image-scramble', function() {
 
 	it('should do something', function(done) {
 		// console.log('oi<-')
-		this.timeout(60000);
+		this.timeout(10000);
 		imgScramble({
 			image:'test/sample3.png',
 			seed:'Kappa',
