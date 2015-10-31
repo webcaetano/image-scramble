@@ -9,10 +9,10 @@ describe('image-scramble', function() {
 	it('should do something', function(done) {
 		this.timeout(5000);
 		imgScramble({
-			image:'test/sample2.png',
+			image:'examples/sample2.png',
 			seed:'Kappa',
 			sliceSize:5,
-			dest:'test/sample2_crop.png'
+			dest:'examples/sample2_crop.png'
 		},function(err,results){
 			expect(err).to.be.null;
 			done();
