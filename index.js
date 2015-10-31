@@ -6,7 +6,8 @@ var path = require('path');
 var shuffleSeed = require('shuffle-seed');
 
 var defaults = {
-	sliceSize:5
+	sliceSize:5,
+	buffer:false
 };
 
 module.exports = function(options,done){
@@ -114,9 +115,15 @@ module.exports = function(options,done){
 					},done)
 				},function(err){
 					if(err) callback(err);
-					image.write(options.dest,callback)
+					if(!options.buffer){
+						image.write(options.dest,callback)
+					} else {
+						image.getBuffer( Jimp.MIME_PNG, callback );
+					}
 				})
 			});
 		}]
-	},done)
+	},function(err,results){
+		done(err,options.buffer ? results.save : null)
+	});
 }

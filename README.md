@@ -44,6 +44,9 @@ imgScramble({
 #### dest
 - Destination of scrambled image
 
+#### buffer <optional>
+- Return image as buffer
+
 ### Installation 
 
 ```
