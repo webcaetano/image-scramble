@@ -89,7 +89,7 @@
 			}
 		}
 		if(!bmp){
-			return canvas.toDataURL("image/png", 1);
+			return canvas;
 		} else {
 			return bmp;
 		}

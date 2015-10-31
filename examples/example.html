@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Image Scramble</title>
+<script src="./../bower_components/seedrandom/seedrandom.js"></script>
+<script src="./../bower_components/shuffle-seed/shuffle-seed.js"></script>
+<script src="./../unscrambleImg.js"></script>
+<script src="./../bower_components/jquery/dist/jquery.js"></script>
+<link href="./../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<script>
+var sliceSize = 5;
+
+var img=new Image();
+img.onload=function(){
+	// var img = unscrambleImg(img,sliceSize,'Kappa').toDataURL("image/png", 1);
+	var canvas = unscrambleImg(img,sliceSize,'Kappa');
+	$('#original').append(img);
+	$('#unscrambled').append(canvas);
+}
+img.setAttribute('crossOrigin', 'anonymous');
+img.src='https://raw.githubusercontent.com/webcaetano/image-scramble/master/examples/sample2_crop.png';
+
+</script>
+</head>
+<body align="center" style="background:#f2f2f2;margin:20px;">
+
+	<div class="panel panel-default" style="width:200px;display:inline-block;vertical-align:top;" align="center">
+		<div class="panel-heading">
+			<h3 class="panel-title">Source</h3>
+		</div>
+		<div class="panel-body" id="unscrambled">
+		</div>
+	</div>
+	<div class="panel panel-default" style="width:200px;display:inline-block;vertical-align:top;" align="center">
+		<div class="panel-heading">
+			<h3 class="panel-title">Scrambled</h3>
+		</div>
+		<div class="panel-body" id="original">
+		</div>
+	</div>
+
+</body>
+</html>

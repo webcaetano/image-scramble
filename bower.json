@@ -14,12 +14,15 @@
     "test",
     "tests",
     "test.js",
+    "examples",
     "gulp",
     "gulpfile.js",
     ".travis.yml",
     ".npmignore"
   ],
   "devDependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
     "phaser": "~2.4.4"
   },
   "dependencies": {
