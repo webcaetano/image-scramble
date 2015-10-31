@@ -49,56 +49,28 @@ module.exports = function(options,done){
 	}
 
 	var getColsInGroup = function(slices){
-		var y = 'init';
+		if(slices.length==1) return 1;
+		var t = 'init';
 		for(var i=0;i<slices.length;i++){
-			if(y=='init') y = slices[i].pos.y;
-			if(y!=slices[i].pos.y){
+			if(t=='init') t = slices[i].pos.y;
+			if(t!=slices[i].pos.y){
 				return i;
-				console.log(slices[i].pos.y)
 				break;
 			}
 		}
-		return 0;
+		return i;
 	}
 
-	var getGroup = function(sliceSize,slices,sizeImg){
-		sliceSize = sliceSize.split('-');
+	var getGroup = function(slices,sizeImg){
+		sliceSize = slices[0].size.split('-');
 		var self = {};
-
-		if(sliceSize[0]==options.sliceSize && sliceSize[1]==options.sliceSize){
-			var cols = getColsInGroup(slices);
-			return {
-				type:'normal',
-				x:0,
-				y:0,
-				width:cols*options.sliceSize,
-				height:(slices.length/cols)*options.sliceSize
-			};
-		} else if(sliceSize[0]!=options.sliceSize && sliceSize[1]==options.sliceSize){
-			return {
-				type:'side',
-				x:sizeImg.width-sliceSize[0],
-				y:0,
-				width:sliceSize[0],
-				height:slices.length*options.sliceSize
-			};
-		} else if(sliceSize[0]==options.sliceSize && sliceSize[1]!=options.sliceSize){
-			return {
-				type:'bottom',
-				x:0,
-				y:sizeImg.height-sliceSize[1],
-				width:slices.length*options.sliceSize,
-				height:sliceSize[1]
-			};
-		} else if(sliceSize[0]!=options.sliceSize && sliceSize[1]!=options.sliceSize){
-			return {
-				type:'corner',
-				x:sizeImg.width-sliceSize[0],
-				y:sizeImg.height-sliceSize[1],
-				width:sliceSize[0],
-				height:sliceSize[1]
-			};
-		}
+		self.slices = slices.length;
+		self.cols = getColsInGroup(slices);
+		self.rows = slices.length/self.cols;
+		self.width = sliceSize[0]*self.cols;
+		self.height = sliceSize[1]*self.rows;
+		self.x = slices[0].pos.x;
+		self.y = slices[0].pos.y;
 		return self;
 	}
 
@@ -127,7 +99,8 @@ module.exports = function(options,done){
 
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				async.forEachOf(results.getSlices,function(slices,k,done){
-					var group = getGroup(k,slices,results.getSize.bitmap);
+					var group = getGroup(slices,results.getSize.bitmap);
+					console.log(group)
 					var shuffleInd = [];
 					for(var i=0;i<slices.length;i++) shuffleInd.push(i);
 
