@@ -14,7 +14,7 @@ Very useful for protect canvas spritesheets.
 
 ### Usage Example
 
-```
+```javascript
 var imgScramble = require('image-scramble');
 
 
@@ -58,7 +58,7 @@ bower install unscramble-img
 
 #### Usage 
 
-```
+```javascript
 // unscrambleImg(src,sliceSize,seed)
 
 var canvas = unscrambleImg(img,sliceSize,'Kappa');
@@ -66,7 +66,7 @@ var canvas = unscrambleImg(img,sliceSize,'Kappa');
 
 #### Phaser Example
 
-```
+```javascript
 var bmp = unscrambleImg(img,sliceSize,'Kappa',game.add.bitmapData(img.width,img.height));
 var sprite = game.add.sprite(0, 0, bmp);
 ```
