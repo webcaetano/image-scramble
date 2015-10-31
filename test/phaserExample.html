@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<title>Phaser Example</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+	<script src="./../bower_components/seedrandom/seedrandom.js"></script>
+	<script src="./../bower_components/shuffle-seed/shuffle-seed.js"></script>
+	<script src="./../bower_components/jquery/dist/jquery.js"></script>
+	<script src="./../bower_components/phaser/build/phaser.js"></script>
+</head>
+<body style="background:#f2f2f2;">
+	<div style="margin-top:5px;" align="center">
+		<div id="canvas"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+
+var sliceSize = 5;
+
+function phaserUnscrambleImg(bmp,img,sliceSize,seed){
+	var i;
+	var totalParts = (img.width*img.height)/(sliceSize*sliceSize);
+	var inds = [];
+	for(i=0;i<totalParts;i++) inds.push(i);
+	var keys = shuffleSeed.shuffle(inds,seed);
+	// var ctx=bmp.ctx;
+	var verticalSlices=img.width/sliceSize;
+	var horizontalSlices=img.height/sliceSize;
+
+	for(i=0;i<keys.length;i++){
+		var s=keys[i];
+		var row=parseInt(s/verticalSlices);
+		var col=s-row*verticalSlices;
+
+		var canvasRow=parseInt(i/verticalSlices);
+		var canvasCol=i-canvasRow*verticalSlices;
+
+		bmp.ctx.drawImage(
+			img,
+			canvasCol*sliceSize,
+			canvasRow*sliceSize,
+			sliceSize,
+			sliceSize,
+			col*sliceSize,
+			row*sliceSize,
+			sliceSize,
+			sliceSize
+		);
+	}
+	return bmp;
+}
+
+var img=new Image();
+img.onload=function(){
+	startPhaser({
+		img:img
+	})
+}
+img.setAttribute('crossOrigin', 'anonymous');
+img.src='https://raw.githubusercontent.com/webcaetano/image-scramble/1b2467a9dcf560e2ece9f2982d31babc3bdebbfc/test/2_crop.png';
+
+function startPhaser(scope){
+	var game = new Phaser.Game(100, 100, Phaser.AUTO, 'canvas');
+	game.state.add('game', {
+		preload:function preload(){
+			game.stage.backgroundColor = '#fff';
+		},
+		create:function create(){
+			var bmp = phaserUnscrambleImg(game.add.bitmapData(img.width,img.height),scope.img,sliceSize,'Kappa');
+			var sprite = game.add.sprite(0, 0, bmp);
+		}
+	});
+
+	game.state.start('game');
+}
+
+
+
+</script>

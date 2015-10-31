@@ -71,56 +71,27 @@ function unscrambleImg(img,sliceSize,seed){
 		var i;
 		for(i=0;i<slices[g].length;i++) shuffleInd.push(i);
 		shuffleInd = shuffleSeed.shuffle(shuffleInd,seed);
-		console.log(shuffleInd)
 		for(i=0;i<slices[g].length;i++){
 			var s=shuffleInd[i];
 
 			var row=parseInt(s/group.cols);
 			var col=s-row*group.cols;
-			var x=col*sliceSize;
-			var y=row*sliceSize;
+			var x=col*slices[g][i].width;
+			var y=row*slices[g][i].height;
 
-			var canvasRow=parseInt(i/verticalSlices);
-			var canvasCol=i-canvasRow*verticalSlices;
-			var canvasX=canvasCol*sliceSize;
-			var canvasY=canvasRow*sliceSize;
-
-			if(i==0){
-				console.log(i,s,row,col,x,y)
-			}
-
-			ctx.drawImage(img,
-				canvasX,
-				canvasY,
-				sliceSize,
-				sliceSize,
-				x,
-				y,
-				sliceSize,
-				sliceSize
+			ctx.drawImage(
+				img,
+				group.x+x,
+				group.y+y,
+				slices[g][i].width,
+				slices[g][i].height,
+				slices[g][i].x,
+				slices[g][i].y,
+				slices[g][i].width,
+				slices[g][i].height
 			);
 		}
-		break;
 	}
-	// console.log()
-
-	// for(i=0;i<keys.length;i++){
-		// var s=keys[i];
-		// var row=parseInt(s/verticalSlices);
-		// var col=s-row*verticalSlices;
-		// var x=col*sliceSize;
-		// var y=row*sliceSize;
-
-		// var canvasRow=parseInt(i/verticalSlices);
-		// var canvasCol=i-canvasRow*verticalSlices;
-		// var canvasX=canvasCol*sliceSize;
-		// var canvasY=canvasRow*sliceSize;
-
-		// ctx.drawImage(obfuscatedImage,
-		// canvasX,canvasY,sliceSize,sliceSize,
-		// x,y,sliceSize,sliceSize);
-	// }
-
 	return canvas.toDataURL("image/png", 1);
 }
 
@@ -133,7 +104,7 @@ img.onload=function(){
 	document.body.appendChild(image);
 }
 img.setAttribute('crossOrigin', 'anonymous');
-img.src='https://raw.githubusercontent.com/webcaetano/image-scramble/cfac1dfaeef35ffb0e24e40522b8e4987437da04/test/sample3_crop.png';
+img.src='https://raw.githubusercontent.com/webcaetano/image-scramble/master/test/sample3_crop.png';
 
 </script>
 </head>
