@@ -7,7 +7,7 @@ var git = require('gulp-git');
 var bump = require('gulp-bump');
 var tag_version = require('gulp-tag-version');
 var runSequence = require('run-sequence');
-var spawn = require('child_process').spawn;
+var spawn = require('cross-spawn');
 var argv = require('yargs').argv;
 
 
@@ -21,7 +21,8 @@ module.exports = function(options) {
 	})
 
 	gulp.task('npm', function (done) {
-		spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
+		spawn.sync('npm', ['publish'], { stdio: 'inherit' });
+		done();
 	});
 
 	gulp.task('git:tag', function () {
