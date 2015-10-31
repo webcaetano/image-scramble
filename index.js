@@ -109,10 +109,11 @@ module.exports = function(options,done){
 						getSliceImage(slice,i,group,function(err, sliceImg){
 							var pos  = getPartPos(shuffleInd[i],group);
 							image.blit(sliceImg, group.x+pos.x, group.y+pos.y)
-							callback();
+							callback(err);
 						});
 					},done)
 				},function(err){
+					if(err) callback(err);
 					image.write(options.dest,callback)
 				})
 			});

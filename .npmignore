@@ -1,5 +1,6 @@
 node_modules/
 bower.json
+bower_components/
 .travis.yml
 .editorconfig
 test/

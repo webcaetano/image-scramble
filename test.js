@@ -7,18 +7,16 @@ var imgScramble = require('./');
 describe('image-scramble', function() {
 
 	it('should do something', function(done) {
-		// console.log('oi<-')
-		this.timeout(10000);
+		this.timeout(5000);
 		imgScramble({
-			image:'test/sample3.png',
+			image:'test/sample2.png',
 			seed:'Kappa',
 			sliceSize:5,
-			dest:'test/sample3_crop.png'
+			dest:'test/sample2_crop.png'
 		},function(err,results){
-			console.log(err)
+			expect(err).to.be.null;
 			done();
 		})
-		// done();
 	});
 
 })
