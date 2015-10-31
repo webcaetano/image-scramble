@@ -7,6 +7,7 @@ var git = require('gulp-git');
 var bump = require('gulp-bump');
 var tag_version = require('gulp-tag-version');
 var runSequence = require('run-sequence');
+var spawn = require('child_process').spawn;
 var argv = require('yargs').argv;
 
 
@@ -14,10 +15,14 @@ module.exports = function(options) {
 	var packageSrc = './package.json';
 
 	gulp.task('release',function(done){
-		return runSequence('git:bump', 'git:commit_release','git:tag','git:push',function(){
+		return runSequence('git:bump', 'git:commit_release','git:tag','git:push','npm',function(){
 			process.exit();
 		});
 	})
+
+	gulp.task('npm', function (done) {
+		spawn('npm', ['publish'], { stdio: 'inherit' }).on('close', done);
+	});
 
 	gulp.task('git:tag', function () {
 		return gulp.src(packageSrc)
