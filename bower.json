@@ -1,7 +1,7 @@
 {
   "name": "image-scramble",
-  "main": "index.js",
-  "version": "0.0.1",
+  "main": "unscrambleImg.js",
+  "version": "1.0.1",
   "homepage": "https://github.com/webcaetano/image-scramble",
   "authors": [
     "Andre Caetano <dezaodoido@gmail.com>"
@@ -12,13 +12,17 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "test.js",
+    "gulp",
+    "gulpfile.js",
+    ".travis.yml",
+    ".npmignore"
   ],
   "devDependencies": {
-    "jquery": "~2.1.4",
-    "shuffle-seed": "~1.1.1"
+    "phaser": "~2.4.4"
   },
   "dependencies": {
-    "phaser": "~2.4.4"
+    "shuffle-seed": "~1.1.5"
   }
 }

@@ -100,7 +100,6 @@ module.exports = function(options,done){
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				async.forEachOf(results.getSlices,function(slices,k,done){
 					var group = getGroup(slices,results.getSize.bitmap);
-					console.log(group)
 					var shuffleInd = [];
 					for(var i=0;i<slices.length;i++) shuffleInd.push(i);
 
@@ -114,8 +113,6 @@ module.exports = function(options,done){
 						});
 					},done)
 				},function(err){
-					console.log(err)
-					console.log('1')
 					image.write(options.dest,callback)
 				})
 			});
