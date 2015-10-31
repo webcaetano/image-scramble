@@ -1,5 +1,6 @@
 # Image-scramble
 
+[![npm version](https://badge.fury.io/js/image-scramble.svg)](https://badge.fury.io/js/image-scramble) [![Build Status](https://travis-ci.org/webcaetano/image-scramble.svg?branch=master)](https://travis-ci.org/webcaetano/image-scramble) 
 Scramble/Unscramble Images
 
 Very useful for protect canvas spritesheets.
@@ -70,5 +71,3 @@ var canvas = unscrambleImg(img,sliceSize,'Kappa');
 var bmp = unscrambleImg(img,sliceSize,'Kappa',game.add.bitmapData(img.width,img.height));
 var sprite = game.add.sprite(0, 0, bmp);
 ```
-
-Image Scramble with Seed
