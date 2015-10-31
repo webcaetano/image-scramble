@@ -3,18 +3,20 @@
 <title>SeededShuffle test</title>
 <script src="./../bower_components/seedrandom/seedrandom.js"></script>
 <script src="./../bower_components/shuffle-seed/shuffle-seed.js"></script>
-<script src="./../bower_components/jquery/dist/jquery.js"></script>
 <script>
 var sliceSize = 5;
 
-function unscrambleImg(img,sliceSize,seed){
+function unscrambleImg(img,sliceSize,seed,bmp){
 	var i;
 	var totalParts = Math.ceil(img.width/sliceSize)*Math.ceil(img.height/sliceSize);
 	var inds = [];
 	for(i=0;i<totalParts;i++) inds.push(i);
-	// var keys = shuffleSeed.shuffle(inds,seed);
-	var canvas=document.createElement("canvas");
-	var ctx=canvas.getContext('2d');
+	if(!bmp){
+		var canvas=document.createElement("canvas");
+		var ctx=canvas.getContext('2d');
+	} else {
+		var ctx = bmp.ctx;
+	}
 	canvas.width=img.width;
 	canvas.height=img.height;
 
@@ -98,7 +100,6 @@ function unscrambleImg(img,sliceSize,seed){
 var img=new Image();
 img.onload=function(){
 	var r = unscrambleImg(img,sliceSize,'Kappa');
-	// console.log(r);
 	var image = new Image();
 	image.src = r;
 	document.body.appendChild(image);
