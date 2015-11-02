@@ -1,6 +1,8 @@
 # Image-scramble
 
-[![npm version](https://badge.fury.io/js/image-scramble.svg)](https://badge.fury.io/js/image-scramble) [![Build Status](https://travis-ci.org/webcaetano/image-scramble.svg?branch=master)](https://travis-ci.org/webcaetano/image-scramble) 
+[![npm version](https://img.shields.io/npm/v/image-scramble.svg?style=flat-square)](https://www.npmjs.com/package/image-scramble) 
+[![Build Status](https://img.shields.io/travis/webcaetano/image-scramble.svg?style=flat-square)](https://travis-ci.org/webcaetano/image-scramble) 
+[![npm donwloads](https://img.shields.io/npm/dm/image-scramble.svg?style=flat-square)](https://www.npmjs.com/package/image-scramble) 
 
 Scramble/Unscramble Images
 
