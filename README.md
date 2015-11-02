@@ -76,3 +76,6 @@ var bmp = unscrambleImg(img,sliceSize,'Kappa',game.add.bitmapData(img.width,img.
 var sprite = game.add.sprite(0, 0, bmp);
 ```
 
+## Gulp plugin
+
+[gulp-image-scramble](https://github.com/webcaetano/gulp-image-scramble)
