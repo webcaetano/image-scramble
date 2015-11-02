@@ -3,6 +3,8 @@
 [![npm version](https://img.shields.io/npm/v/image-scramble.svg?style=flat-square)](https://www.npmjs.com/package/image-scramble) 
 [![Build Status](https://img.shields.io/travis/webcaetano/image-scramble.svg?style=flat-square)](https://travis-ci.org/webcaetano/image-scramble) 
 [![npm donwloads](https://img.shields.io/npm/dm/image-scramble.svg?style=flat-square)](https://www.npmjs.com/package/image-scramble) 
+![Bower version](https://img.shields.io/bower/v/image-scramble.svg)
+
 
 Scramble/Unscramble Images
 
