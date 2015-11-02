@@ -33,7 +33,7 @@ imgScramble({
 ## Options
 
 #### image
-- Path to image source
+- Path to image source Or Valid Buffer
 
 #### seed
 - Seed to shuffle in same sequence
