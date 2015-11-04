@@ -17,7 +17,8 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Original</h3>
 		</div>
-		<div class="panel-body" id="original">
+		<div class="panel-body" id="original" style="width:114px;height:145px;">
+			<img src="https://raw.githubusercontent.com/webcaetano/image-scramble/master/examples/sample2_crop.png">
 		</div>
 	</div>
 	<div class="panel panel-default" style="width:200px;display:inline-block;vertical-align:top;" align="center">
@@ -31,33 +32,27 @@
 </html>
 <script type="text/javascript">
 
-var sliceSize = 5;
-
-var img=new Image();
-img.onload=function(){
-	startPhaser({
-		img:img
-	})
-	$('#original').append(img);
-}
-img.setAttribute('crossOrigin', 'anonymous');
-img.src='https://raw.githubusercontent.com/webcaetano/image-scramble/master/examples/sample2_crop.png';
-
 function startPhaser(scope){
-	var game = new Phaser.Game(scope.img.width, scope.img.height, Phaser.AUTO, 'unscrambled');
+	var game = new Phaser.Game(136, 114, Phaser.AUTO, 'unscrambled');
 	game.state.add('game', {
 		preload:function preload(){
+			game.load.image('goblin-scramble','sample2_crop.png');
 			game.stage.backgroundColor = '#fff';
 		},
 		create:function create(){
-			var bmp = unscrambleImg(scope.img,sliceSize,'Kappa',game.add.bitmapData(img.width,img.height));
+			var sliceSize = 5;
+			var goblinScrambleSprite = game.add.sprite(0,0,'goblin-scramble')
+			var goblinScramble = new Phaser.BitmapData(goblinScrambleSprite.width,goblinScrambleSprite.height).drawFull(goblinScrambleSprite);
+			var bmp = unscrambleImg(goblinScramble._image,sliceSize,'Kappa',game.add.bitmapData(goblinScramble._image.width,goblinScramble._image.height));
 			var sprite = game.add.sprite(0, 0, bmp);
+			goblinScrambleSprite.destroy();
 		}
 	});
 
 	game.state.start('game');
 }
 
+startPhaser();
 
 
 </script>
