@@ -108,7 +108,7 @@ module.exports = function(options,done){
 
 					shuffleInd = shuffleSeed.shuffle(shuffleInd,options.seed);
 
-					async.forEachOfLimit(slices,50,function(slice,i,callback){
+					async.forEachOfLimit(slices,100,function(slice,i,callback){
 						getSliceImage(slice,i,group,function(err, sliceImg){
 							var pos  = getPartPos(shuffleInd[i],group);
 							image.blit(sliceImg, group.x+pos.x, group.y+pos.y);
