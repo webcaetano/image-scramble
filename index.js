@@ -102,19 +102,26 @@ module.exports = function(options,done){
 
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				async.forEachOf(results.getSlices,function(slices,k,done){
+					if(k!='20-20') {
+						done();
+						return;
+					}
+					var size = k.split("-");
 					var group = getGroup(slices,results.getSize.bitmap);
 					var shuffleInd = [];
 					for(var i=0;i<slices.length;i++) shuffleInd.push(i);
 
 					shuffleInd = shuffleSeed.shuffle(shuffleInd,options.seed);
 
-					async.forEachOfLimit(slices,50,function(slice,i,callback){
-						getSliceImage(slice,i,group,function(err, sliceImg){
+					async.forEachOfLimit(slices,100,function(slice,i,callback){
+						// getSliceImage(slice,i,group,function(err, sliceImg){
 							var pos  = getPartPos(shuffleInd[i],group);
-							image.blit(sliceImg, group.x+pos.x, group.y+pos.y);
+							var srcPos = getPartPos(i,group);
+							// console.log(results.getSize)
+							image.blit(results.getSize, group.x+pos.x, group.y+pos.y, srcPos.x, srcPos.y, Number(size[0]), Number(size[1]));
 							delete sliceImg;
 							callback(err);
-						});
+						// });
 					},done)
 				},function(err){
 					if(err) callback(err);
