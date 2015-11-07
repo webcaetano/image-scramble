@@ -9,7 +9,7 @@ describe('image-scramble', function() {
 	it('should create shuffle image and write', function(done) {
 		var outputFile = 'examples/sample5_crop.png'
 
-		this.timeout(10000);
+		this.timeout(5000);
 		imgScramble({
 			image:'examples/sample5.png',
 			seed:'Kappa',
@@ -23,7 +23,7 @@ describe('image-scramble', function() {
 	});
 
 	it('should create shuffle image and return buffer', function(done) {
-		this.timeout(10000);
+		this.timeout(5000);
 		imgScramble({
 			image:'examples/sample2.png',
 			seed:'Kappa',
