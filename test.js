@@ -7,12 +7,12 @@ var imgScramble = require('./');
 describe('image-scramble', function() {
 
 	it('should create shuffle image and write', function(done) {
-		this.timeout(5000);
+		this.timeout(30000);
 		imgScramble({
-			image:'examples/sample2.png',
+			image:'examples/sample5.png',
 			seed:'Kappa',
-			sliceSize:5,
-			dest:'examples/sample2_crop.png'
+			sliceSize:20,
+			dest:'examples/sample5_crop.png'
 		},function(err,results){
 			expect(err).to.be.null;
 			done();

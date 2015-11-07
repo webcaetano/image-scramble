@@ -41,7 +41,9 @@ module.exports = function(options,done){
 		var size = slice.size.split("-");
 		new Jimp(options.image, function(err,image){
 			image.crop(group.x+pos.x,group.y+pos.y,parseInt(size[0]),parseInt(size[1]))
+			// callback(err,image);
 			callback(err,image);
+			// image.getBuffer( Jimp.MIME_PNG, callback)
 		});
 	}
 
@@ -106,10 +108,11 @@ module.exports = function(options,done){
 
 					shuffleInd = shuffleSeed.shuffle(shuffleInd,options.seed);
 
-					async.forEachOf(slices,function(slice,i,callback){
+					async.forEachOfLimit(slices,50,function(slice,i,callback){
 						getSliceImage(slice,i,group,function(err, sliceImg){
 							var pos  = getPartPos(shuffleInd[i],group);
-							image.blit(sliceImg, group.x+pos.x, group.y+pos.y)
+							image.blit(sliceImg, group.x+pos.x, group.y+pos.y);
+							delete sliceImg;
 							callback(err);
 						});
 					},done)
