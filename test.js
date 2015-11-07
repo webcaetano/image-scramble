@@ -7,16 +7,19 @@ var imgScramble = require('./');
 describe('image-scramble', function() {
 
 	it('should create shuffle image and write', function(done) {
-		this.timeout(30000);
+		var outputFile = 'examples/sample5_crop.png'
+
+		this.timeout(5000);
 		imgScramble({
 			image:'examples/sample5.png',
 			seed:'Kappa',
 			sliceSize:20,
-			dest:'examples/sample5_crop.png'
+			dest:outputFile
 		},function(err,results){
+			expect(fs.readFileSync(outputFile)).to.not.be.null;
 			expect(err).to.be.null;
 			done();
-		})
+		});
 	});
 
 	it('should create shuffle image and return buffer', function(done) {

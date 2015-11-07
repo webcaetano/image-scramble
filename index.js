@@ -102,6 +102,7 @@ module.exports = function(options,done){
 
 			new Jimp(results.getSize.bitmap.width,results.getSize.bitmap.height,function(err, image){
 				async.forEachOf(results.getSlices,function(slices,k,done){
+					var size = k.split("-");
 					var group = getGroup(slices,results.getSize.bitmap);
 					var shuffleInd = [];
 					for(var i=0;i<slices.length;i++) shuffleInd.push(i);
@@ -109,12 +110,11 @@ module.exports = function(options,done){
 					shuffleInd = shuffleSeed.shuffle(shuffleInd,options.seed);
 
 					async.forEachOfLimit(slices,100,function(slice,i,callback){
-						getSliceImage(slice,i,group,function(err, sliceImg){
-							var pos  = getPartPos(shuffleInd[i],group);
-							image.blit(sliceImg, group.x+pos.x, group.y+pos.y);
-							delete sliceImg;
-							callback(err);
-						});
+						var pos  = getPartPos(shuffleInd[i],group);
+						var srcPos = getPartPos(i,group);
+						image.blitAdv(results.getSize, group.x+pos.x, group.y+pos.y, group.x+srcPos.x, group.y+srcPos.y, Number(size[0]), Number(size[1]));
+						delete sliceImg;
+						callback(err);
 					},done)
 				},function(err){
 					if(err) callback(err);
