@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "async": "^1.5.0",
-    "jimp": "^0.2.9",
+    "jimp": "git://github.com/webcaetano/jimp.git#4b3944c6f15cd4f0c7e9f6eb09df9ee0d7275a52",
     "lodash": "^3.10.1",
     "shuffle-seed": "^1.1.5"
   }
