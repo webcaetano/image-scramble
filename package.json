@@ -1,6 +1,6 @@
 {
   "name": "image-scramble",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Image Scramble with Seed",
   "main": "index.js",
   "scripts": {
